@@ -1,0 +1,8 @@
+const resume = async (client, message, args) => {
+	const player = client.player.get(message.guild.id);
+	if (!player) return message.reply('No lavalink player found');
+	await player.pause(false);
+	return message.reply('Resumed the music');
+};
+
+module.exports = resume;

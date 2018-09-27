@@ -1,0 +1,27 @@
+{
+  "name": "park",
+  "version": "0.0.1",
+  "description": "A discord bot",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TheOnlyArtz/Park.git"
+  },
+  "author": "TheOnlyArtz",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/TheOnlyArtz/Park/issues"
+  },
+  "homepage": "https://github.com/TheOnlyArtz/Park#readme",
+  "dependencies": {
+    "discord.js": "git+https://github.com/discordjs/discord.js.git",
+    "enmap": "^4.3.0",
+    "lavalink": "^2.1.1",
+    "rethinkdbdash": "^2.3.31",
+    "snekfetch": "^4.0.4",
+    "ws": "^6.0.0"
+  }
+}
