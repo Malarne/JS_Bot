@@ -71,6 +71,8 @@ class Player extends EventEmitter {
          * @type {number}
          */
 		this.timestamp = null;
+
+		this.queue = [];
 	}
 
 	/**
@@ -95,6 +97,7 @@ class Player extends EventEmitter {
      */
 	disconnect(msg) {
 		this.playing = false;
+		this.queue = [];
 		this.stop();
 		/**
          * Emitted when the Player disconnects
@@ -136,6 +139,7 @@ class Player extends EventEmitter {
 		});
 		this.playing = false;
 		this.track = null;
+		this.queue = [];
 		return this;
 	}
 

@@ -7,21 +7,39 @@ const defaultRegions = {
 };
 
 const play = async (client, message, args) => {
-	if (!message.member || !message.member.voiceChannel) return message.reply('Must be in a voice channel');
+	if (!message.member || !message.member.voice.channel) return message.reply('Must be in a voice channel');
 	let [...track] = args;
 	track = track.join(' ');
+	if (!track.indexOf('https') == 1) {
+		if (!track.indexOf(' ') == 0) {
+			track = track.split(' ').join('');
+		}
+	}
+	else {
+		if (!track.indexOf('ytsearch:') == 1) track = 'ytsearch:' + track;
+	}
 	const [song] = await getSong(track);
 	const player = await client.player.join({
 		guild: message.guild.id,
-		channel: message.member.voiceChannel.id,
+		channel: message.member.voice.channel.id,
 		host: getIdealHost(client, message.guild.region),
 	}, { selfdeaf: false });
 	if (!player) throw 'No player found...';
+	if (player.playing) {
+		player.queue.push(track);
+		return message.reply(`${track} was added to the queue !`);
+	}
 	player.play(song.track);
 	player.once('error', console.error);
 	player.once('end', data => {
-		if (data.reason === 'REPLACED') return;
 		message.channel.send('Song has ended...');
+		if (!player.queue.length == 0) {
+			const next = player.queue.splice(0, 1);
+			play(client, message, next);
+		}
+		else {
+			player.leave(message.guild.id);
+		}
 	});
 	return message.reply(`Now playing: **${song.info.title}** by *${song.info.author}*`);
 };
